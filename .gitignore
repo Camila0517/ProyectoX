@@ -13,5 +13,17 @@
 .externalNativeBuild
 .cxx
 local.properties
+<<<<<<< HEAD
 .idea/
 
+=======
+
+# ======================
+# Backend Maven (NetBeans)
+# ======================
+/backend/target/
+/backend/.mvn/wrapper/maven-wrapper.jar
+
+# Logs
+*.log
+>>>>>>> 9be38fe98a8ba1cbbfa2304695ee8461f8b9ea68
