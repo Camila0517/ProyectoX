@@ -1,83 +1,67 @@
 package org.utl.proyectox
 
 import android.os.Bundle
-import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
-import org.utl.proyectox.model.Residuo
-import org.utl.proyectox.network.RetrofitClient
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
+import com.google.android.material.bottomnavigation.BottomNavigationView
 
-class MainActivity : ComponentActivity() {
+class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContent {
-            ResiduoScreen()
+        setContentView(R.layout.activity_main)
+
+        val bottomNav = findViewById<BottomNavigationView>(R.id.bottom_navigation)
+
+        // Recibimos el ROL que mandaste desde el Login
+        val rol = intent.getStringExtra("ROL")
+
+        // 1. Configuración inicial según el ROL
+        if (rol == "RECOLECTOR") {
+            bottomNav.menu.clear()
+            bottomNav.inflateMenu(R.menu.bottom_menu_collector)
+            // CAMBIO: El recolector ahora inicia en la pantalla del MAPA
+            cambiarPantalla(HomeRecolectorFragment())
+        } else {
+            bottomNav.menu.clear()
+            bottomNav.inflateMenu(R.menu.bottom_menu_citizen)
+            // El ciudadano inicia en su bienvenida con el botón verde
+            cambiarPantalla(HomeCiudadanoFragment())
         }
-    }
-}
 
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun ResiduoScreen() {
-
-    var residuos by remember { mutableStateOf(listOf<Residuo>()) }
-
-    LaunchedEffect(Unit) {
-        RetrofitClient.instance.getResiduos()
-            .enqueue(object : Callback<List<Residuo>> {
-
-                override fun onResponse(
-                    call: Call<List<Residuo>>,
-                    response: Response<List<Residuo>>
-                ) {
-                    if (response.isSuccessful) {
-                        residuos = response.body() ?: emptyList()
-                    }
+        // 2. Navegación: ¿A dónde ir cuando tocan un icono?
+        bottomNav.setOnItemSelectedListener { item ->
+            when (item.itemId) {
+                // Inicio para Ciudadano
+                R.id.nav_home -> {
+                    cambiarPantalla(HomeCiudadanoFragment())
+                    true
                 }
-
-                override fun onFailure(call: Call<List<Residuo>>, t: Throwable) {
-                    println("Error: ${t.message}")
+                // Inicio para Recolector (Mapa)
+                R.id.nav_home_collector -> {
+                    cambiarPantalla(HomeRecolectorFragment())
+                    true
                 }
-            })
-    }
-
-    Scaffold(
-        topBar = {
-            CenterAlignedTopAppBar(
-                title = { Text("Lista de Residuos") }
-            )
-        }
-    ) { paddingValues ->
-
-        LazyColumn(
-            modifier = Modifier
-                .padding(paddingValues)
-                .padding(16.dp)
-        ) {
-            items(residuos) { residuo ->
-
-                Card(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(bottom = 12.dp)
-                ) {
-                    Column(modifier = Modifier.padding(16.dp)) {
-                        Text(text = "Tipo: ${residuo.tipo}")
-                        Text(text = "Descripción: ${residuo.descripcion}")
-                        Text(text = "Estado: ${residuo.estado}")
-                    }
+                R.id.nav_report -> {
+                    cambiarPantalla(ReporteFragment())
+                    true
                 }
+                R.id.nav_waste -> {
+                    cambiarPantalla(ListaResiduosFragment())
+                    true
+                }
+                R.id.nav_profile -> {
+                    cambiarPantalla(PerfilFragment())
+                    true
+                }
+                else -> false
             }
         }
+    }
+
+    private fun cambiarPantalla(fragment: Fragment) {
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.fragment_container, fragment)
+            .commit()
     }
 }

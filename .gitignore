@@ -16,6 +16,10 @@
 .externalNativeBuild
 .cxx
 local.properties
+<<<<<<< HEAD
+.idea/
+
+=======
 
 # ======================
 # Backend Maven (NetBeans)
@@ -25,3 +29,4 @@ local.properties
 
 # Logs
 *.log
+>>>>>>> 9be38fe98a8ba1cbbfa2304695ee8461f8b9ea68
