@@ -1,36 +1,78 @@
 package org.utl.proyectox
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.textfield.TextInputEditText
+import org.utl.proyectox.model.LoginRequest
+import org.utl.proyectox.model.UsuarioDTO
+import org.utl.proyectox.network.RetrofitClient
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class LoginActivity : AppCompatActivity() {
 
+    @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.layout_login)
 
-        // Buscamos tus componentes de diseño por su ID
         val btnEntrar = findViewById<MaterialButton>(R.id.btn_login_submit)
-        val etUsuario = findViewById<TextInputEditText>(R.id.et_login_user)
+        val etEmail = findViewById<TextInputEditText>(R.id.et_login_user)
+        val etPassword = findViewById<TextInputEditText>(R.id.et_login_pass)
+
 
         btnEntrar.setOnClickListener {
-            val usuario = etUsuario.text.toString().lowercase()
 
-            // El Intent es el "salto" a la siguiente pantalla (MainActivity)
-            val intent = Intent(this, MainActivity::class.java)
+            val email = etEmail.text.toString().trim()
+            val password = etPassword.text.toString().trim()
 
-            // Pasamos el tipo de usuario a la siguiente pantalla
-            if (usuario == "recolector") {
-                intent.putExtra("ROL", "RECOLECTOR")
-            } else {
-                intent.putExtra("ROL", "CIUDADANO")
+            if (email.isEmpty() || password.isEmpty()) {
+                Toast.makeText(this, "Completa todos los campos", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
             }
 
-            startActivity(intent)
-            finish() // Cerramos el login para que no puedan regresar con el botón 'atrás'
+            val request = LoginRequest(email, password)
+
+            RetrofitClient.instance.login(request)
+                .enqueue(object : Callback<UsuarioDTO> {
+
+                    override fun onResponse(
+                        call: Call<UsuarioDTO>,
+                        response: Response<UsuarioDTO>
+                    ) {
+
+                        if (response.isSuccessful) {
+
+                            val usuario = response.body()
+
+                            val intent = Intent(this@LoginActivity, MainActivity::class.java)
+                            intent.putExtra("ROL", usuario?.rol)
+
+                            startActivity(intent)
+                            finish()
+
+                        } else {
+                            Toast.makeText(
+                                this@LoginActivity,
+                                "Credenciales incorrectas",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                    }
+
+                    override fun onFailure(call: Call<UsuarioDTO>, t: Throwable) {
+                        Toast.makeText(
+                            this@LoginActivity,
+                            "Error de conexión con el servidor",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                })
         }
     }
 }
