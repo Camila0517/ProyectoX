@@ -1,11 +1,10 @@
 package org.utl.proyectox.model
 
 data class Residuo(
-    val id: Long,
+    val id: Long? = null,
     val tipo: String,
     val descripcion: String,
     val direccion: String,
-    val latitud: Double,
-    val longitud: Double,
-    val estado: String
+    val latitud: Double? = null,
+    val longitud: Double? = null
 )

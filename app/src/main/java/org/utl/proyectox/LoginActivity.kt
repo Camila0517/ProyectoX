@@ -25,7 +25,6 @@ class LoginActivity : AppCompatActivity() {
         val etEmail = findViewById<TextInputEditText>(R.id.et_login_user)
         val etPassword = findViewById<TextInputEditText>(R.id.et_login_pass)
 
-
         btnEntrar.setOnClickListener {
 
             val email = etEmail.text.toString().trim()
@@ -45,16 +44,23 @@ class LoginActivity : AppCompatActivity() {
                         call: Call<UsuarioDTO>,
                         response: Response<UsuarioDTO>
                     ) {
-
                         if (response.isSuccessful) {
 
                             val usuario = response.body()
 
-                            val intent = Intent(this@LoginActivity, MainActivity::class.java)
-                            intent.putExtra("ROL", usuario?.rol)
+                            if (usuario != null) {
 
-                            startActivity(intent)
-                            finish()
+                                val sharedPref = getSharedPreferences("sesion", MODE_PRIVATE)
+                                val editor = sharedPref.edit()
+
+                                editor.putLong("USUARIO_ID", usuario.id)
+                                editor.putString("ROL", usuario.rol)
+                                editor.apply()
+
+                                val intent = Intent(this@LoginActivity, MainActivity::class.java)
+                                startActivity(intent)
+                                finish()
+                            }
 
                         } else {
                             Toast.makeText(
