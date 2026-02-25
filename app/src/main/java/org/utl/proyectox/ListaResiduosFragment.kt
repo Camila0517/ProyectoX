@@ -1,18 +1,20 @@
 package org.utl.proyectox.ui
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import org.utl.proyectox.R
+import org.utl.proyectox.adapter.ResiduoAdapter
 import org.utl.proyectox.model.Residuo
 import org.utl.proyectox.network.RetrofitClient
-import org.utl.proyectox.network.ApiService
-import org.utl.proyectox.adapter.ResiduoAdapter
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -21,7 +23,7 @@ class ListaResiduosFragment : Fragment() {
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: ResiduoAdapter
-    private lateinit var apiService: ApiService
+    private lateinit var apiService: org.utl.proyectox.network.ApiService
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -86,8 +88,8 @@ class ListaResiduosFragment : Fragment() {
     private fun recogerResiduo(residuoId: Long) {
 
         val usuarioId = requireActivity()
-            .getSharedPreferences("usuario", 0)
-            .getLong("id", 0)
+            .getSharedPreferences("sesion", Context.MODE_PRIVATE)
+            .getLong("USUARIO_ID", -1L)
 
         apiService.recogerResiduo(residuoId, usuarioId)
             .enqueue(object : Callback<Residuo> {
@@ -105,7 +107,16 @@ class ListaResiduosFragment : Fragment() {
                             Toast.LENGTH_SHORT
                         ).show()
 
+                        // refrescar lista
                         cargarResiduosPendientes()
+
+                        // enviar broadcast local para que el mapa lo reciba y refresque
+                        try {
+                            val intent = Intent(MapHeatmapFragment.ACTION_RESIDUO_RECOGIDO)
+                            LocalBroadcastManager.getInstance(requireContext()).sendBroadcast(intent)
+                        } catch (e: Exception) {
+                            // no bloquear la UI por fallo en el broadcast
+                        }
 
                     } else {
 
