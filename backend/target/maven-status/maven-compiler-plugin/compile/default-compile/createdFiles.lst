@@ -1,0 +1,13 @@
+com\giru\backend\Residuo.class
+com\giru\backend\ResiduoController.class
+com\giru\backend\UsuarioDTO.class
+com\giru\backend\UsuarioController.class
+com\giru\backend\GiruBackendApplication.class
+com\giru\backend\ResiduoRepository.class
+com\giru\backend\SaludoController.class
+com\giru\backend\Usuario.class
+com\giru\backend\EstadoResiduo.class
+com\giru\backend\PasswordConfig.class
+com\giru\backend\UsuarioRepository.class
+com\giru\backend\Rol.class
+com\giru\backend\LoginRequest.class

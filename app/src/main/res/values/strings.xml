@@ -5,4 +5,5 @@
     <string name="btn_register">Crear Cuenta</string>
     <string name="hint_user">Usuario</string>
     <string name="hint_password">Contraseña</string>
+    <string name="google_maps_key">AQUI_VA_TU_API_KEY</string>
 </resources>

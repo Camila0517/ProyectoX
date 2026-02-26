@@ -7,4 +7,4 @@ data class Residuo(
     val direccion: String,
     val latitud: Double? = null,
     val longitud: Double? = null
-)
+) : java.io.Serializable
