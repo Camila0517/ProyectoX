@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <!-- Mapa ocupa la mayor parte de la pantalla -->
+    <fragment
+        android:id="@+id/map_ruta"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <!-- Panel inferior con info y botones -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp"
+        android:background="@color/white"
+        android:elevation="8dp">
+
+        <!-- Distancia -->
+        <TextView
+            android:id="@+id/tv_distancia"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="📍 Distancia: --"
+            android:textSize="14sp"
+            android:textColor="#333333"
+            android:paddingBottom="4dp"/>
+
+        <!-- Duración -->
+        <TextView
+            android:id="@+id/tv_duracion"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="⏱ Tiempo estimado: --"
+            android:textSize="14sp"
+            android:textColor="#333333"
+            android:paddingBottom="12dp"/>
+
+        <!-- Botones -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center">
+
+            <!-- Abrir en Google Maps -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_iniciar_ruta"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginEnd="8dp"
+                android:text="Iniciar Ruta"
+                app:icon="@android:drawable/ic_dialog_map"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"/>
+
+            <!-- Marcar como recogido -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_recoger_residuo"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginStart="8dp"
+                android:text="Marcar como Recogido"
+                android:backgroundTint="#4CAF50"/>
+
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

@@ -11,7 +11,7 @@ import org.utl.proyectox.model.Residuo
 
 class ResiduoAdapter(
     private val lista: List<Residuo>,
-    private val onRecogerClick: (Long) -> Unit
+    private val onRecogerClick: (Residuo) -> Unit  // ✅ Cambiado de Long a Residuo
 ) : RecyclerView.Adapter<ResiduoAdapter.ViewHolder>() {
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -29,16 +29,13 @@ class ResiduoAdapter(
     override fun getItemCount(): Int = lista.size
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-
         val residuo = lista[position]
 
         holder.descripcion.text = residuo.descripcion
         holder.direccion.text = residuo.direccion
 
         holder.btnRecoger.setOnClickListener {
-            residuo.id?.let { id ->
-                onRecogerClick(id)
-            }
+            onRecogerClick(residuo)  // ✅ Pasa el objeto completo
         }
     }
 }
