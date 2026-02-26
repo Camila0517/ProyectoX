@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <TextView
+        android:id="@+id/tv_descripcion"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Descripción"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:id="@+id/tv_direccion"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Dirección"
+        android:layout_marginTop="4dp"/>
+
+    <Button
+        android:id="@+id/btn_recoger"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Recoger"
+        android:layout_marginTop="8dp"/>
+
+</LinearLayout>
