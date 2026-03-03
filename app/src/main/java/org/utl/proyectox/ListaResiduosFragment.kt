@@ -218,7 +218,7 @@ class ListaResiduosFragment : Fragment() {
 
     // Abre RutaRecolectorFragment con el residuo seleccionado
     private fun abrirRuta(residuo: Residuo) {
-        val fragment = RutaRecolectorFragment.newInstance(residuo)
+        val fragment = RutaRecolectorFragment.newInstance()
         parentFragmentManager.beginTransaction()
             .replace(R.id.fragment_container, fragment)
             .addToBackStack(null)
