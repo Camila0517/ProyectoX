@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="24dp"
-    android:background="@color/white"
+    android:background="@color/fondo_suave"
     android:gravity="center_horizontal">
 
     <com.google.android.material.imageview.ShapeableImageView
