@@ -33,7 +33,7 @@
                 android:id="@+id/tv_tipo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Tipo: Plástico "
+                android:text="Tipo: "
                 android:textSize="18sp"
                 android:textStyle="bold"
                 android:textColor="@color/giru_green" />
