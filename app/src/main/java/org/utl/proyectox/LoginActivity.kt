@@ -55,6 +55,9 @@ class LoginActivity : AppCompatActivity() {
 
                                 editor.putLong("USUARIO_ID", usuario.id)
                                 editor.putString("ROL", usuario.rol)
+                                editor.putString("CORREO", email)
+                                editor.putString("PASSWORD", password)
+
                                 editor.apply()
 
                                 val intent = Intent(this@LoginActivity, MainActivity::class.java)

@@ -7,25 +7,39 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.google.android.material.button.MaterialButton
+import com.google.android.material.textfield.TextInputEditText
 
 class PerfilFragment : Fragment() {
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        // 1. Inflamos el diseño y lo guardamos en una variable 'view'
+    ): View {
+
         val view = inflater.inflate(R.layout.fragment_profile, container, false)
 
-        // 2. Buscamos el botón de cerrar sesión por su ID
+        val etUsuario = view.findViewById<TextInputEditText>(R.id.et_profile_user)
+        val etPass = view.findViewById<TextInputEditText>(R.id.et_profile_pass)
+
         val btnCerrarSesion = view.findViewById<MaterialButton>(R.id.btn_logout)
 
-        // 3. Programamos la acción del clic
-        btnCerrarSesion?.setOnClickListener {
-            // Creamos el salto hacia StartActivity
-            val intent = Intent(requireContext(), StartActivity::class.java)
+        // obtener datos guardados
+        val prefs = requireActivity().getSharedPreferences("sesion", 0)
 
-            // Estas banderas limpian el historial para que no se pueda regresar al perfil con el botón "atrás"
+        val correo = prefs.getString("CORREO", "")
+        val password = prefs.getString("PASSWORD", "")
+
+        // mostrar datos
+        etUsuario.setText(correo)
+        etPass.setText(password)
+
+        btnCerrarSesion.setOnClickListener {
+
+            // borrar sesión
+            prefs.edit().clear().apply()
+
+            val intent = Intent(requireContext(), StartActivity::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
 
             startActivity(intent)
