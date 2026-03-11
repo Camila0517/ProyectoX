@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import org.utl.proyectox.ui.ListaResiduosFragment
+import org.utl.proyectox.ui.MapHeatmapFragment
 
 class MainActivity : AppCompatActivity() {
 
@@ -26,7 +27,7 @@ class MainActivity : AppCompatActivity() {
             bottomNav.menu.clear()
             bottomNav.inflateMenu(R.menu.bottom_menu_collector)
 
-            cambiarPantalla(HomeRecolectorFragment())
+            cambiarPantalla(MapHeatmapFragment())
 
         } else {
 
@@ -45,7 +46,7 @@ class MainActivity : AppCompatActivity() {
                 }
 
                 R.id.nav_home_collector -> {
-                    cambiarPantalla(HomeRecolectorFragment())
+                    cambiarPantalla(MapHeatmapFragment())
                     true
                 }
 
