@@ -23,7 +23,7 @@
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Usuario"
+        android:hint="Correo"
         app:boxStrokeColor="#2E7D32"
         app:hintTextColor="#2E7D32"
         app:boxCornerRadiusTopStart="15dp"
