@@ -6,14 +6,26 @@
     android:orientation="vertical"
     android:gravity="center"
     android:padding="32dp"
-    android:background="@color/white">
+    android:background="@color/fondo_suave">
 
     <com.google.android.material.imageview.ShapeableImageView
-        android:layout_width="220dp"
-        android:layout_height="220dp"
+        android:id="@+id/logo_giru"
+        android:layout_width="180dp"
+        android:layout_height="180dp"
         android:src="@drawable/giru_logo"
         app:shapeAppearanceOverlay="@style/CircleImage"
-        android:layout_marginBottom="60dp" />
+        android:layout_marginBottom="12dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Gestión Integral de Residuos Urbanos"
+        android:textColor="@color/giru_green"
+        android:textSize="20sp"
+        android:textStyle="bold|italic"
+        android:alpha="0.8"
+        android:layout_marginBottom="60dp"
+        android:textAlignment="center" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_to_login"
@@ -36,7 +48,6 @@
         android:textStyle="bold"
         android:textColor="@color/white"
         android:backgroundTint="@color/giru_green"
-        app:cornerRadius="32dp"
-        android:layout_marginBottom="20dp" />
+        app:cornerRadius="32dp" />
 
 </LinearLayout>
