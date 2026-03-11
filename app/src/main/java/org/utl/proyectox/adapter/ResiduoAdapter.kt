@@ -11,10 +11,12 @@ import org.utl.proyectox.model.Residuo
 
 class ResiduoAdapter(
     private val lista: List<Residuo>,
-    private val onRecogerClick: (Residuo) -> Unit  // ✅ Cambiado de Long a Residuo
+    private val onRecogerClick: (Residuo) -> Unit
 ) : RecyclerView.Adapter<ResiduoAdapter.ViewHolder>() {
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+        // 1. Agregamos la referencia al ID tv_tipo que creamos en el XML
+        val tvTipo: TextView = view.findViewById(R.id.tv_tipo)
         val descripcion: TextView = view.findViewById(R.id.tv_descripcion)
         val direccion: TextView = view.findViewById(R.id.tv_direccion)
         val btnRecoger: Button = view.findViewById(R.id.btn_recoger)
@@ -31,11 +33,13 @@ class ResiduoAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val residuo = lista[position]
 
+        // 2. Aquí es donde sucede la magia: asignamos el tipo real
+        holder.tvTipo.text = residuo.tipo
         holder.descripcion.text = residuo.descripcion
         holder.direccion.text = residuo.direccion
 
         holder.btnRecoger.setOnClickListener {
-            onRecogerClick(residuo)  // ✅ Pasa el objeto completo
+            onRecogerClick(residuo)
         }
     }
 }
